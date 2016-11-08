@@ -27,7 +27,7 @@ type NamingSchemes struct {
 }
 
 var defaultNamingSchemes = NamingSchemes{
-	Movie:  "{n} ({y})/{fn}",
+	Movie:  "{n} ({y})/{n}",
 	Series: "{n}/Season {s.pad(2)}/{n} - {s00e00} - {t}",
 	Anime:  "{n}/Season {s.pad(2)}/{n} - {s00e00} - {t}",
 	Music:  "{n}/{fn}",
