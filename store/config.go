@@ -27,10 +27,10 @@ type NamingSchemes struct {
 }
 
 var defaultNamingSchemes = NamingSchemes{
-	Movie:  "{n}/Season {s}/{sxe} - {t}",
-	Series: "{n}/Season {s}/{sxe} - {t}",
-	Anime:  "{n}/Season {s}/{sxe} - {t}",
-	Music:  "{n}/Season {s}/{sxe} - {t}",
+	Movie:  "{n} ({y})/{fn}",
+	Series: "{n}/Season {s.pad(2)}/{n} - {s00e00} - {t}",
+	Anime:  "{n}/Season {s.pad(2)}/{n} - {s00e00} - {t}",
+	Music:  "{n}/{fn}",
 }
 
 func NewConfig() *Config {

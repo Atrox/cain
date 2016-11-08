@@ -22,14 +22,12 @@ func runCommand(c *cli.Context) error {
 		return err
 	}
 
-	err = fb.Execute(conf, c.String("path"))
+	err = fb.Execute(*conf, c.String("path"))
 	if err != nil {
 		return err
 	}
 
-	fmt.Println(conf)
-	fmt.Println(fb)
-
+	fmt.Println("[+] Successfully sorted all found media files.")
 	return nil
 }
 
@@ -54,7 +52,6 @@ func setupCommand(c *cli.Context) error {
 
 	fmt.Println("[+] Config successfully saved")
 	fmt.Println("[+] You can now use `run` to sort your media!")
-
 	return nil
 }
 
