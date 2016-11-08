@@ -1,0 +1,18 @@
+hash: 9a06e4cbced973bfb949b20a6ce8a8af074f3a07bb4896463652061b4699b11a
+updated: 2016-11-08T18:12:59.715724451+01:00
+imports:
+- name: github.com/equinox-io/equinox
+  version: 6f97d0d3970881d3e53dd6f547a41109eb055e54
+  subpackages:
+  - internal/go-update
+  - internal/go-update/internal/binarydist
+  - internal/go-update/internal/osext
+  - internal/osext
+  - proto
+- name: github.com/mitchellh/go-homedir
+  version: 756f7b183b7ab78acdbbee5c7f392838ed459dda
+- name: github.com/urfave/cli
+  version: e485446237011b8abac93919242e6f059ad56c87
+- name: gopkg.in/yaml.v2
+  version: a5b47d31c556af34a302ce5d659e6fea44d90de0
+testImports: []
