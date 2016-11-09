@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/atrox/cain/filebot"
 	"github.com/atrox/cain/input"
@@ -35,25 +34,36 @@ func runCommand(c *cli.Context) error {
 func setupCommand(c *cli.Context) error {
 	fmt.Println(logo)
 
-	if store.Exists("config") {
-		fmt.Println("[!] Configuration File already exists. Config will get overwritten!")
-	}
-
-	fmt.Println("[+] You can skip steps if you just insert nothing at all")
-
 	conf := store.NewConfig()
-	conf.Destinations.Movie = saveToPrompt("movies")
-	conf.Destinations.Series = saveToPrompt("series")
-	conf.Destinations.Anime = saveToPrompt("anime")
-	conf.RetrievePath = retrievePath()
+	store.GetOrCreate(conf)
+
+	fmt.Println(`
+====================================
+| Configure destinations for files |
+====================================`)
+
+	conf.Destinations.Movie = askSaveLocation("movies", conf.Destinations.Movie)
+	conf.Destinations.Series = askSaveLocation("series", conf.Destinations.Series)
+	conf.Destinations.Anime = askSaveLocation("anime", conf.Destinations.Anime)
+
+	fmt.Println(`
+========================================================
+|  Configure default retrieve path for unsorted files  |
+| Enter nothing to skip this step and require '--path' |
+========================================================`)
+
+	conf.RetrievePath = retrievePath(conf.RetrievePath)
 
 	err := store.Save(conf)
 	if err != nil {
 		return err
 	}
 
-	fmt.Println("[+] Config successfully saved")
-	fmt.Println("[+] You can now use `run` to sort your media!")
+	fmt.Println(`
+==================================================
+|           Config successfully saved            |
+| You can now use "cain run" to sort your media! |
+==================================================`)
 	return nil
 }
 
@@ -61,26 +71,38 @@ func updateCommand(c *cli.Context) error {
 	return equinoxUpdate()
 }
 
-func saveToPrompt(name string) string {
-	p := input.Prompt(fmt.Sprintf("Where to put the sorted %s", name), input.PathValidator).(string)
+func askSaveLocation(name string, current string) string {
+	if current != "" {
+		prompt := input.Prompt(fmt.Sprintf("Where to put the sorted %s (default=%s)", name, current), input.PathValidator(true)).(string)
+		if prompt == "" {
+			return current
+		}
 
-	if p == "" {
-		fmt.Printf("[+] %s will get ignored by Cain\n", strings.Title(name))
-	} else {
-		fmt.Printf("[+] %s will get saved to %s\n", strings.Title(name), p)
+		return prompt
 	}
 
-	return p
+	prompt := input.Prompt(fmt.Sprintf("Where to put the sorted %s", name), input.PathValidator(false)).(string)
+	return prompt
 }
 
-func retrievePath() string {
-	p := input.Prompt("Where should I look for media if '--path' is not specified", input.PathValidator).(string)
-
-	if p == "" {
-		fmt.Println("[+] Default Value for '--path' not specified. Parameter is now required.")
+func retrievePath(current string) string {
+	var text string
+	if current == "" {
+		text = "Default retrieve path"
 	} else {
-		fmt.Printf("[+] Default Value for '--path' set as %s.\n", p)
+		text = fmt.Sprintf("Default retrieve path (default=%s)", current)
 	}
 
-	return p
+	prompt := input.Prompt(text, input.PathValidator(true)).(string)
+
+	if prompt == "" && current != "" {
+		fmt.Printf("[+] Default Value for '--path' set as %s.\n", current)
+		return current
+	} else if prompt == "" {
+		fmt.Println("[+] Default Value for '--path' not specified. Parameter is now required.")
+	} else {
+		fmt.Printf("[+] Default Value for '--path' set as %s.\n", prompt)
+	}
+
+	return prompt
 }
