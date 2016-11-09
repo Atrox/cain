@@ -12,7 +12,7 @@ func main() {
 		Name:      "cain",
 		HelpName:  "cain",
 		Usage:     "simple media management",
-		Version:   "v0.1.1",
+		Version:   "v0.1.2",
 		Authors:   []*cli.Author{{Name: "Atrox", Email: "mail@atrox.me"}},
 		Copyright: "(c) 2016 Atrox (Atrox.ME)",
 		Commands: []*cli.Command{

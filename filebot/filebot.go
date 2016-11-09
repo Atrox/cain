@@ -12,28 +12,20 @@ import (
 const executableName = "filebot"
 
 type FileBot struct {
-	Path string
+	RetrievePath string
+
+	exePath string
+	config  *store.Config
+	cmds    []string
 }
 
-func New() (*FileBot, error) {
+func New(conf *store.Config) (*FileBot, error) {
 	path, err := exec.LookPath(executableName)
 	if err != nil {
 		return nil, err
 	}
 
-	return &FileBot{Path: path}, nil
-}
-
-func (f *FileBot) Execute(conf store.Config, retrievePathFlag string) error {
-	// if path flag specified, overwrite retrievePath
-	if retrievePathFlag != "" {
-		conf.RetrievePath = retrievePathFlag
-	}
-
-	if conf.RetrievePath == "" {
-		return fmt.Errorf("[!] '--path' or 'defaultRetrievePath' not specified")
-	}
-
+	// default commands
 	commands := []string{
 		"-script",
 		"fn:amc",
@@ -43,19 +35,32 @@ func (f *FileBot) Execute(conf store.Config, retrievePathFlag string) error {
 		"--log-file",
 		"amc.log",
 		"--def",
-		fmt.Sprintf("excludeList=%s", conf.LockFile),
-		"--def",
-		fmt.Sprintf("movieFormat=%s", filepath.Join(conf.Destinations.Movie, conf.NamingSchemes.Movie)),
-		"--def",
-		fmt.Sprintf("seriesFormat=%s", filepath.Join(conf.Destinations.Series, conf.NamingSchemes.Series)),
-		"--def",
-		fmt.Sprintf("animeFormat=%s", filepath.Join(conf.Destinations.Anime, conf.NamingSchemes.Anime)),
-		"--def",
-		fmt.Sprintf("musicFormat=%s", filepath.Join(conf.Destinations.Music, conf.NamingSchemes.Music)),
-		filepath.Clean(conf.RetrievePath),
+		"clean=y",
 	}
 
-	cmd := exec.Command(f.Path, commands...)
+	return &FileBot{
+		exePath: path,
+		config:  conf,
+		cmds:    commands,
+	}, nil
+}
+
+func (f *FileBot) Execute() error {
+	retrievePath := f.config.RetrievePath
+
+	// if path flag specified, overwrite retrievePath
+	if f.RetrievePath != "" {
+		retrievePath = f.RetrievePath
+	}
+
+	if retrievePath == "" {
+		return fmt.Errorf("[!] '--path' or 'defaultRetrievePath' not specified")
+	}
+
+	f.defCmds("excludeList", "movieFormat", "seriesFormat", "animeFormat", "musicFormat")
+	f.cmds = append(f.cmds, filepath.Clean(retrievePath))
+
+	cmd := exec.Command(f.exePath, f.cmds...)
 
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -66,4 +71,50 @@ func (f *FileBot) Execute(conf store.Config, retrievePathFlag string) error {
 	}
 
 	return nil
+}
+
+func (f *FileBot) defCmds(names ...string) {
+	for _, name := range names {
+		f.defCmd(name)
+	}
+}
+
+func (f *FileBot) defCmd(name string) {
+	loc := f.getPath(name)
+	if loc == "" {
+		return
+	}
+
+	f.cmds = append(f.cmds, "--def", fmt.Sprintf("%s=%s", name, loc))
+}
+
+func (f *FileBot) getPath(name string) string {
+	switch name {
+	case "excludeList":
+		if f.config.LockFile == "" {
+			return ""
+		}
+
+		return filepath.Clean(f.config.LockFile)
+	case "movieFormat":
+		if f.config.Destinations.Movie == "" {
+			return ""
+		}
+
+		return filepath.Join(f.config.Destinations.Movie, f.config.NamingSchemes.Movie)
+	case "seriesFormat":
+		if f.config.Destinations.Series == "" {
+			return ""
+		}
+
+		return filepath.Join(f.config.Destinations.Series, f.config.NamingSchemes.Series)
+	case "animeFormat":
+		if f.config.Destinations.Anime == "" {
+			return ""
+		}
+
+		return filepath.Join(f.config.Destinations.Anime, f.config.NamingSchemes.Anime)
+	default:
+		return ""
+	}
 }

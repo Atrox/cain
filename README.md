@@ -1,5 +1,6 @@
 # CAIN - Simple Media Management
 ### Simple and Easy Media Management with CAIN
+![CAIN Preview](https://github.com/atrox/cain/raw/master/preview.gif)
 Cain is based on __[FileBot][filebot]__ and plays very well with your favorite __Torrent Client__.
 
 # Features

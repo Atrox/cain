@@ -68,7 +68,7 @@ func GetOrCreate(i interface{}) error {
 }
 
 func Exists(name string) bool {
-	_, err := os.Stat(location(name))
+	_, err := os.Stat(Path(name))
 	if err != nil {
 		return false
 	}
@@ -76,10 +76,10 @@ func Exists(name string) bool {
 	return true
 }
 
-func locationFromInterface(i interface{}) string {
-	return location(strings.ToLower(reflect.TypeOf(i).Elem().Name()))
+func Path(name string) string {
+	return filepath.Join(Base, name+".yaml")
 }
 
-func location(name string) string {
-	return filepath.Join(Base, name+".yaml")
+func locationFromInterface(i interface{}) string {
+	return Path(strings.ToLower(reflect.TypeOf(i).Elem().Name()))
 }

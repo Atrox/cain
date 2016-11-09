@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/atrox/cain/filebot"
 	"github.com/atrox/cain/input"
@@ -10,19 +11,19 @@ import (
 )
 
 func runCommand(c *cli.Context) error {
-	fb, err := filebot.New()
-	if err != nil {
-		return err
-	}
-
 	conf := &store.Config{}
-
-	err = store.Get(conf)
+	err := store.Get(conf)
 	if err != nil {
 		return err
 	}
 
-	err = fb.Execute(*conf, c.String("path"))
+	fb, err := filebot.New(conf)
+	if err != nil {
+		return err
+	}
+	fb.RetrievePath = c.String("path")
+
+	err = fb.Execute()
 	if err != nil {
 		return err
 	}
@@ -38,11 +39,12 @@ func setupCommand(c *cli.Context) error {
 		fmt.Println("[!] Configuration File already exists. Config will get overwritten!")
 	}
 
+	fmt.Println("[+] You can skip steps if you just insert nothing at all")
+
 	conf := store.NewConfig()
 	conf.Destinations.Movie = saveToPrompt("movies")
 	conf.Destinations.Series = saveToPrompt("series")
 	conf.Destinations.Anime = saveToPrompt("anime")
-	conf.Destinations.Music = saveToPrompt("music")
 	conf.RetrievePath = retrievePath()
 
 	err := store.Save(conf)
@@ -60,14 +62,19 @@ func updateCommand(c *cli.Context) error {
 }
 
 func saveToPrompt(name string) string {
-	p := input.Prompt(fmt.Sprintf("Where to put the sorted %s", name), input.PathValidator(false))
-	fmt.Printf("[+] %s will get saved to %s\n", name, p)
+	p := input.Prompt(fmt.Sprintf("Where to put the sorted %s", name), input.PathValidator).(string)
 
-	return p.(string)
+	if p == "" {
+		fmt.Printf("[+] %s will get ignored by Cain\n", strings.Title(name))
+	} else {
+		fmt.Printf("[+] %s will get saved to %s\n", strings.Title(name), p)
+	}
+
+	return p
 }
 
 func retrievePath() string {
-	p := input.Prompt("Where should I look for media if '--path' is not specified (enter nothing to skip)", input.PathValidator(true)).(string)
+	p := input.Prompt("Where should I look for media if '--path' is not specified", input.PathValidator).(string)
 
 	if p == "" {
 		fmt.Println("[+] Default Value for '--path' not specified. Parameter is now required.")
