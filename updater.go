@@ -49,23 +49,23 @@ func equinoxUpdate() error {
 
 var updatesChan = make(chan string)
 
-type Updater struct {
+type updater struct {
 	NextCheck time.Time `yaml:"nextCheck"`
 }
 
 func checkForUpdates() {
 	go func(quit chan string) {
-		updater := &Updater{}
-		store.Get(updater)
+		up := &updater{}
+		store.Get(up)
 
 		now := time.Now().UTC()
-		if updater.NextCheck.After(now) {
+		if up.NextCheck.After(now) {
 			quit <- ""
 			return
 		}
 
-		updater.NextCheck = now.AddDate(0, 0, 1)
-		store.Save(updater)
+		up.NextCheck = now.AddDate(0, 0, 1)
+		store.Save(up)
 
 		var opts equinox.Options
 		err := opts.SetPublicKeyPEM(publicKey)
@@ -73,12 +73,16 @@ func checkForUpdates() {
 			log.Fatal(err)
 		}
 
-		resp, err := equinox.Check(appID, opts)
+		_, err = equinox.Check(appID, opts)
 		if err != nil {
 			quit <- ""
 			return
 		}
 
-		quit <- fmt.Sprintf("[!] New Version of Cain is available: %s! Update with 'cain update' [!]", resp.ReleaseVersion)
+		quit <- fmt.Sprintln(`
+===================================================
+[!]      New Version of Cain is available!      [!]
+[!]   Update automatically with 'cain update'   [!]
+===================================================`)
 	}(updatesChan)
 }

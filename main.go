@@ -9,28 +9,27 @@ import (
 
 func main() {
 	app := &cli.App{
-		Name:      "cain",
-		HelpName:  "cain",
-		Usage:     "simple media management",
-		Version:   "v0.1.2",
-		Authors:   []*cli.Author{{Name: "Atrox", Email: "mail@atrox.me"}},
-		Copyright: "(c) 2016 Atrox (Atrox.ME)",
+		Name:     "cain",
+		HelpName: "cain",
+		Usage:    "automated media management",
+		Version:  "v0.1.2",
+		Authors:  []*cli.Author{{Name: "Atrox", Email: "mail@atrox.me"}},
 		Commands: []*cli.Command{
 			{
 				Name:    "setup",
 				Aliases: []string{"s"},
-				Usage:   "setup cain...",
+				Usage:   "create config file with sensitive defaults",
 				Action:  setupCommand,
 			},
 			{
 				Name:    "run",
 				Aliases: []string{"r"},
-				Usage:   "run cain on this",
+				Usage:   "run cain",
 				Action:  runCommand,
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "path, p",
-						Usage: "path to use for run",
+						Usage: "custom path",
 					},
 				},
 			},
