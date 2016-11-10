@@ -1,5 +1,6 @@
 package: github.com/atrox/cain
 import:
+- package: github.com/atrox/box
 - package: gopkg.in/yaml.v2
 - package: github.com/mitchellh/go-homedir
 - package: github.com/equinox-io/equinox
