@@ -3,11 +3,14 @@ package main
 import (
 	"fmt"
 
+	"github.com/atrox/box"
 	"github.com/atrox/cain/filebot"
 	"github.com/atrox/cain/input"
 	"github.com/atrox/cain/store"
 	"github.com/urfave/cli"
 )
+
+var b = box.New()
 
 func runCommand(c *cli.Context) error {
 	conf := &store.Config{}
@@ -32,25 +35,16 @@ func runCommand(c *cli.Context) error {
 }
 
 func setupCommand(c *cli.Context) error {
-	fmt.Println(logo)
-
 	conf := store.NewConfig()
 	store.GetOrCreate(conf)
 
-	fmt.Println(`
-====================================
-| Configure destinations for files |
-====================================`)
+	b.Println("Configure destinations for sorted files")
 
 	conf.Destinations.Movie = askSaveLocation("movies", conf.Destinations.Movie)
 	conf.Destinations.Series = askSaveLocation("series", conf.Destinations.Series)
 	conf.Destinations.Anime = askSaveLocation("anime", conf.Destinations.Anime)
 
-	fmt.Println(`
-========================================================
-|  Configure default retrieve path for unsorted files  |
-| Enter nothing to skip this step and require '--path' |
-========================================================`)
+	b.Println("Configure default retrieve path for unsorted files", "Enter nothing to skip this step and require '--path'")
 
 	conf.RetrievePath = retrievePath(conf.RetrievePath)
 
@@ -59,11 +53,7 @@ func setupCommand(c *cli.Context) error {
 		return err
 	}
 
-	fmt.Println(`
-==================================================
-|           Config successfully saved            |
-| You can now use "cain run" to sort your media! |
-==================================================`)
+	b.Println("Config successfully saved", "You can now use 'cain run' to sort your media!")
 	return nil
 }
 

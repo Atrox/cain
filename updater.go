@@ -79,6 +79,7 @@ func checkForUpdates() {
 			return
 		}
 
+		// TODO: Use github.com/atrox/box for this but box first needs a .String method
 		quit <- fmt.Sprintln(`
 ===================================================
 [!]      New Version of Cain is available!      [!]

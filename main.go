@@ -7,12 +7,16 @@ import (
 	"github.com/urfave/cli"
 )
 
+const Version = "v0.1.3"
+
+var app *cli.App
+
 func main() {
-	app := &cli.App{
+	app = &cli.App{
 		Name:     "cain",
 		HelpName: "cain",
 		Usage:    "automated media management",
-		Version:  "v0.1.2",
+		Version:  Version,
 		Authors:  []*cli.Author{{Name: "Atrox", Email: "mail@atrox.me"}},
 		Commands: []*cli.Command{
 			{
@@ -48,6 +52,7 @@ func main() {
 }
 
 func before(c *cli.Context) error {
+	fmt.Println(logo)
 	checkForUpdates()
 
 	return nil
