@@ -44,7 +44,8 @@ func setupCommand(c *cli.Context) error {
 	conf.Destinations.Series = askSaveLocation("series", conf.Destinations.Series)
 	conf.Destinations.Anime = askSaveLocation("anime", conf.Destinations.Anime)
 
-	b.Println("Configure default retrieve path for unsorted files", "Enter nothing to skip this step and require '--path'")
+	b.Println("Configure default retrieve path for unsorted files",
+		"Enter nothing to skip this step and require '--path'")
 
 	conf.RetrievePath = retrievePath(conf.RetrievePath)
 
@@ -53,7 +54,9 @@ func setupCommand(c *cli.Context) error {
 		return err
 	}
 
-	b.Println("Config successfully saved", "You can now use 'cain run' to sort your media!")
+	b.Println("Config successfully saved",
+		"You can now use 'cain run' to sort your media!")
+
 	return nil
 }
 

@@ -38,10 +38,9 @@ func main() {
 				},
 			},
 			{
-				Name:    "update",
-				Aliases: []string{"u"},
-				Usage:   "update cain to the newest version",
-				Action:  updateCommand,
+				Name:   "update",
+				Usage:  "update cain to the newest version (if available)",
+				Action: updateCommand,
 			},
 		},
 		Before: before,

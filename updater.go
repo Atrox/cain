@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"log"
-	"time"
 
 	"github.com/atrox/cain/store"
 	"github.com/equinox-io/equinox"
@@ -49,23 +48,18 @@ func equinoxUpdate() error {
 
 var updatesChan = make(chan string)
 
-type updater struct {
-	NextCheck time.Time `yaml:"nextCheck"`
-}
-
 func checkForUpdates() {
 	go func(quit chan string) {
-		up := &updater{}
-		store.Get(up)
+		updater := &store.Updater{}
+		store.Get(updater)
 
-		now := time.Now().UTC()
-		if up.NextCheck.After(now) {
+		if !updater.ShouldCheck() {
 			quit <- ""
 			return
 		}
 
-		up.NextCheck = now.AddDate(0, 0, 1)
-		store.Save(up)
+		updater.SetNext()
+		store.Save(updater)
 
 		var opts equinox.Options
 		err := opts.SetPublicKeyPEM(publicKey)
@@ -79,11 +73,7 @@ func checkForUpdates() {
 			return
 		}
 
-		// TODO: Use github.com/atrox/box for this but box first needs a .String method
-		quit <- fmt.Sprintln(`
-===================================================
-[!]      New Version of Cain is available!      [!]
-[!]   Update automatically with 'cain update'   [!]
-===================================================`)
+		quit <- b.String("New Version of Cain is available!",
+			"Update automatically with 'cain update'")
 	}(updatesChan)
 }

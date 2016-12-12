@@ -1,8 +1,8 @@
 hash: f12bc5a2c859f02045e243c99d9c4b146332ad2faf7177198d9b5c2253d9a33b
-updated: 2016-11-10T18:37:48.099973952+01:00
+updated: 2016-12-12T13:35:51.051187373+01:00
 imports:
 - name: github.com/atrox/box
-  version: a706d878018dd0f36e48337a2f89e7ae489e9efd
+  version: 96efdfa4375a791982d2c7db614d27f10cc87f7d
 - name: github.com/equinox-io/equinox
   version: 6f97d0d3970881d3e53dd6f547a41109eb055e54
   subpackages:
@@ -12,7 +12,7 @@ imports:
   - internal/osext
   - proto
 - name: github.com/mitchellh/go-homedir
-  version: 756f7b183b7ab78acdbbee5c7f392838ed459dda
+  version: b8bc1bf767474819792c23f32d8286a45736f1c6
 - name: github.com/urfave/cli
   version: e485446237011b8abac93919242e6f059ad56c87
 - name: gopkg.in/yaml.v2

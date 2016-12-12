@@ -27,15 +27,11 @@ func New(conf *store.Config) (*FileBot, error) {
 
 	// default commands
 	commands := []string{
-		"-script",
-		"fn:amc",
-		"--action",
-		"move",
+		"-script", "fn:amc",
+		"--action", "move",
+		"--log-file", "amc.log",
+		"--def", "clean=y",
 		"-non-strict",
-		"--log-file",
-		"amc.log",
-		"--def",
-		"clean=y",
 	}
 
 	return &FileBot{
