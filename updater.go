@@ -48,13 +48,15 @@ func equinoxUpdate() error {
 
 var updatesChan = make(chan string)
 
+const timeFormat = "02.01.2006"
+
 func checkForUpdates() {
-	go func(quit chan string) {
+	go func() {
 		updater := &store.Updater{}
 		store.Get(updater)
 
 		if !updater.ShouldCheck() {
-			quit <- ""
+			updatesChan <- ""
 			return
 		}
 
@@ -67,13 +69,15 @@ func checkForUpdates() {
 			log.Fatal(err)
 		}
 
-		_, err = equinox.Check(appID, opts)
+		resp, err := equinox.Check(appID, opts)
 		if err != nil {
-			quit <- ""
+			updatesChan <- ""
 			return
 		}
 
-		quit <- b.String("New Version of Cain is available!",
+		updatesChan <- b.String(
+			fmt.Sprintf("%s (%s)", resp.ReleaseTitle, resp.ReleaseDate.Format(timeFormat)), "",
+			"New Version of Cain is available!",
 			"Update automatically with 'cain update'")
-	}(updatesChan)
+	}()
 }

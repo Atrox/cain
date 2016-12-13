@@ -51,13 +51,18 @@ func main() {
 }
 
 func before(c *cli.Context) error {
+	// print logo
 	fmt.Println(logo)
+
+	// check for updates in background
 	checkForUpdates()
 
 	return nil
 }
 
 func after(c *cli.Context) error {
+	// wait for update request to finish
+	// and print message (if necessary)
 	msg := <-updatesChan
 	if msg != "" {
 		fmt.Println(msg)
