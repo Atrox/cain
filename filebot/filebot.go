@@ -5,6 +5,8 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"reflect"
+	"strings"
 
 	"github.com/atrox/cain/store"
 )
@@ -53,7 +55,9 @@ func (f *FileBot) Execute() error {
 		return fmt.Errorf("[!] '--path' or 'defaultRetrievePath' not specified")
 	}
 
-	f.defCmds("excludeList", "movieFormat", "seriesFormat", "animeFormat", "musicFormat")
+	f.addPathDefinitions("excludeList", "movieFormat", "seriesFormat", "animeFormat")
+	f.addNotifiers()
+
 	f.cmds = append(f.cmds, filepath.Clean(retrievePath))
 
 	cmd := exec.Command(f.exePath, f.cmds...)
@@ -69,19 +73,47 @@ func (f *FileBot) Execute() error {
 	return nil
 }
 
-func (f *FileBot) defCmds(names ...string) {
-	for _, name := range names {
-		f.defCmd(name)
-	}
-}
-
-func (f *FileBot) defCmd(name string) {
-	loc := f.getPath(name)
-	if loc == "" {
+func (f *FileBot) addDefinition(name, value string) {
+	if name == "" || value == "" {
 		return
 	}
 
-	f.cmds = append(f.cmds, "--def", fmt.Sprintf("%s=%s", name, loc))
+	f.cmds = append(f.cmds, "--def", fmt.Sprintf("%s=%s", name, value))
+}
+
+func (f *FileBot) addPathDefinitions(paths ...string) {
+	for _, name := range paths {
+		loc := f.getPath(name)
+		if loc == "" {
+			continue
+		}
+
+		f.addDefinition(name, loc)
+	}
+}
+
+func (f *FileBot) addNotifiers() {
+	typ := reflect.TypeOf(&f.config.Notifiers).Elem()
+	value := reflect.ValueOf(&f.config.Notifiers).Elem()
+
+	for i := 0; i < typ.NumField(); i++ {
+		typeName := typ.Field(i).Name
+
+		field := value.Field(i)
+		fieldType := field.Type()
+
+		// Ignore fields that don't have the same type as a string
+		if fieldType.Name() != "string" {
+			continue
+		}
+
+		str := field.Interface().(string)
+		if str == "" {
+			continue
+		}
+
+		f.addDefinition(strings.ToLower(typeName), str)
+	}
 }
 
 func (f *FileBot) getPath(name string) string {

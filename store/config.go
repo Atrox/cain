@@ -5,9 +5,11 @@ import "path/filepath"
 type Config struct {
 	RetrievePath string `yaml:"defaultRetrievePath"`
 	LockFile     string `yaml:"lockFile"`
+	AutoUpdate   bool   `yaml:"autoUpdate"`
 
-	Destinations  `yaml:"destinations"`
-	NamingSchemes `yaml:"namingSchemes"`
+	Destinations  Destinations  `yaml:"destinations"`
+	NamingSchemes NamingSchemes `yaml:"namingSchemes"`
+	Notifiers     Notifiers     `yaml:"notifiers"`
 }
 
 // Destinations locations
@@ -24,6 +26,17 @@ type NamingSchemes struct {
 	Anime  string `yaml:"anime"`
 }
 
+// Notifiers configuration
+type Notifiers struct {
+	Plex       string `yaml:"plex"`
+	Kodi       string `yaml:"kodi"`
+	Emby       string `yaml:"emby"`
+	Pushover   string `yaml:"pushover"`
+	PushBullet string `yaml:"pushBullet"`
+	Gmail      string `yaml:"gmail"`
+	Mail       string `yaml:"mail"`
+}
+
 var defaultNamingSchemes = NamingSchemes{
 	Movie:  "{n} ({y})/{n}",
 	Series: "{n}/Season {s.pad(2)}/{n} - {s00e00} - {t}",
@@ -33,6 +46,7 @@ var defaultNamingSchemes = NamingSchemes{
 func NewConfig() *Config {
 	return &Config{
 		LockFile:      filepath.Join(Base, "filebot.lock"),
+		AutoUpdate:    true,
 		NamingSchemes: defaultNamingSchemes,
 	}
 }
