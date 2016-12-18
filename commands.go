@@ -49,6 +49,11 @@ func setupCommand(c *cli.Context) error {
 
 	conf.RetrievePath = retrievePath(conf.RetrievePath)
 
+	b.Println("Do you want to use the Auto Update Feature?", "",
+		"If enabled, Cain will automatically update itself", "if updates are available without interruption")
+
+	conf.AutoUpdate = input.Prompt("Enable AutoUpdate (Y/n)", input.BooleanValidator(true)).(bool)
+
 	err := store.Save(conf)
 	if err != nil {
 		return err
