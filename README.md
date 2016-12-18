@@ -1,7 +1,7 @@
 # CAIN - Simple Media Management
 ### Simple and Easy Media Management with CAIN
 ![CAIN Preview GIF](https://github.com/atrox/cain/raw/master/preview.gif)
-Cain is using __[FileBot][filebot]__ under the hood to organize your files. Cain also plays very well with your favorite __Torrent Client__/__Download Client__.
+Cain is using __[FileBot][filebot]__ under the hood to organize your files and plays very well with your favorite __Torrent/Download__ Client.
 
 # Features
 - Placeholder 1
@@ -18,6 +18,10 @@ Cain is using __[FileBot][filebot]__ under the hood to organize your files. Cain
 ## Install
 __Cain__ is one single file, that you put in your `$PATH`.
 After that you can run `cain` by yourself or automate everything and let your Torrent Client handle the rest.
+
+## Setup
+Before you can use Cain you need to setup the configuration. Cain provides some sensitive defaults to get started with.
+Run `cain setup` to interactively configure Cain.
 
 
 # Configuration

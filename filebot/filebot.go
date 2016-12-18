@@ -18,7 +18,7 @@ type FileBot struct {
 
 	exePath string
 	config  *store.Config
-	cmds    []string
+	args    *args
 }
 
 func New(conf *store.Config) (*FileBot, error) {
@@ -27,19 +27,10 @@ func New(conf *store.Config) (*FileBot, error) {
 		return nil, err
 	}
 
-	// default commands
-	commands := []string{
-		"-script", "fn:amc",
-		"--action", "move",
-		"--log-file", "amc.log",
-		"--def", "clean=y",
-		"-non-strict",
-	}
-
 	return &FileBot{
 		exePath: path,
 		config:  conf,
-		cmds:    commands,
+		args:    newArgs(),
 	}, nil
 }
 
@@ -55,12 +46,12 @@ func (f *FileBot) Execute() error {
 		return fmt.Errorf("[!] '--path' or 'defaultRetrievePath' not specified")
 	}
 
-	f.addPathDefinitions("excludeList", "movieFormat", "seriesFormat", "animeFormat")
+	f.addPaths()
 	f.addNotifiers()
 
-	f.cmds = append(f.cmds, filepath.Clean(retrievePath))
+	f.args.Add(filepath.Clean(retrievePath))
 
-	cmd := exec.Command(f.exePath, f.cmds...)
+	cmd := exec.Command(f.exePath, *f.args...)
 
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -73,22 +64,11 @@ func (f *FileBot) Execute() error {
 	return nil
 }
 
-func (f *FileBot) addDefinition(name, value string) {
-	if name == "" || value == "" {
-		return
-	}
+var paths = []string{"excludeList", "movieFormat", "seriesFormat", "animeFormat"}
 
-	f.cmds = append(f.cmds, "--def", fmt.Sprintf("%s=%s", name, value))
-}
-
-func (f *FileBot) addPathDefinitions(paths ...string) {
+func (f *FileBot) addPaths() {
 	for _, name := range paths {
-		loc := f.getPath(name)
-		if loc == "" {
-			continue
-		}
-
-		f.addDefinition(name, loc)
+		f.args.AddDefinition(name, f.getPath(name))
 	}
 }
 
@@ -108,11 +88,7 @@ func (f *FileBot) addNotifiers() {
 		}
 
 		str := field.Interface().(string)
-		if str == "" {
-			continue
-		}
-
-		f.addDefinition(strings.ToLower(typeName), str)
+		f.args.AddDefinition(strings.ToLower(typeName), str)
 	}
 }
 
