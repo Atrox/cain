@@ -4,10 +4,12 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/atrox/cain/store"
+	"github.com/atrox/cain/updater"
 	"github.com/urfave/cli"
 )
 
-const Version = "v0.1.3"
+const Version = "v0.2.0"
 
 var app *cli.App
 
@@ -50,22 +52,30 @@ func main() {
 	app.Run(os.Args)
 }
 
+var appUpdater *updater.Updater
+
 func before(c *cli.Context) error {
 	// print logo
 	fmt.Println(logo)
 
+	// get configuration
+	conf := &store.Config{}
+	err := store.Get(conf)
+	if err != nil {
+		return nil
+	}
+
 	// check for updates in background
-	checkForUpdates()
+	appUpdater = updater.New(conf.AutoUpdate)
 
 	return nil
 }
 
 func after(c *cli.Context) error {
 	// wait for update request to finish
-	// and print message (if necessary)
-	msg := <-updatesChan
-	if msg != "" {
-		fmt.Println(msg)
+	err := appUpdater.Run()
+	if err != nil {
+		return err
 	}
 
 	return nil

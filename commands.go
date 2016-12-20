@@ -67,7 +67,7 @@ func setupCommand(c *cli.Context) error {
 }
 
 func updateCommand(c *cli.Context) error {
-	return equinoxUpdate()
+	return appUpdater.ForceRun()
 }
 
 func askSaveLocation(name string, current string) string {
