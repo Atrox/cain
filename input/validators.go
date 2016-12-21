@@ -3,7 +3,6 @@ package input
 import (
 	"fmt"
 	"os"
-	"strconv"
 	"strings"
 
 	homedir "github.com/mitchellh/go-homedir"
@@ -34,15 +33,6 @@ func PathValidator(allowEmpty bool) ValidatorFunction {
 
 		return dir, nil
 	}
-}
-
-func IntValidator(input string) (interface{}, error) {
-	i, err := strconv.Atoi(input)
-	if err != nil {
-		return nil, err
-	}
-
-	return i, nil
 }
 
 func BooleanValidator(allowEmpty bool) ValidatorFunction {
