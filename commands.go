@@ -35,6 +35,11 @@ func runCommand(c *cli.Context) error {
 }
 
 func setupCommand(c *cli.Context) error {
+	_, err := filebot.Path()
+	if err != nil {
+		b.Println("## WARNING ##", "", "FileBot is not installed", "Cain will not work without FileBot")
+	}
+
 	conf := store.NewConfig()
 	store.GetOrCreate(conf)
 
@@ -55,13 +60,14 @@ func setupCommand(c *cli.Context) error {
 
 	conf.AutoUpdate = input.Prompt("Enable automatic updates (Y/n)", input.BooleanValidator(true)).(bool)
 
-	err := store.Save(conf)
+	err = store.Save(conf)
 	if err != nil {
 		return err
 	}
 
 	b.Println("Config successfully saved",
-		"You can now use 'cain run' to sort your media!")
+		"You can now use 'cain run' to sort your media!",
+		"", fmt.Sprintf("Location: %s", store.Path(conf)))
 
 	return nil
 }

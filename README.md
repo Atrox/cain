@@ -4,11 +4,10 @@
 Cain is using __[FileBot][filebot]__ under the hood to organize your files and plays very well with your favorite __Torrent/Download__ Client.
 
 # Features
-- Placeholder 1
-- Placeholder 2
-- Placeholder 3
-- Placeholder 4
-- Placeholder 5
+- Fully automated media management
+- Simple to setup and easy to use
+- Plays well with your Downloader, Torrent Client or whatever else you like to use
+- __[FileBot][filebot]__ under the hood. *No need to reinvent the wheel*
 
 # Installation
 
@@ -16,7 +15,7 @@ Cain is using __[FileBot][filebot]__ under the hood to organize your files and p
 - __[FileBot][filebot]__ installed and `filebot` executable in `$PATH`
 
 ## Install
-__Cain__ is one single file, that you put in your `$PATH`.
+__Cain__ is one single executable, that you put in your `$PATH`.
 After that you can run `cain` by yourself or automate everything and let your Torrent Client handle the rest.
 
 ## Setup

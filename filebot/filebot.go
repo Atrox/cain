@@ -11,8 +11,6 @@ import (
 	"github.com/atrox/cain/store"
 )
 
-const executableName = "filebot"
-
 type FileBot struct {
 	RetrievePath string
 
@@ -22,7 +20,7 @@ type FileBot struct {
 }
 
 func New(conf *store.Config) (*FileBot, error) {
-	path, err := exec.LookPath(executableName)
+	path, err := Path()
 	if err != nil {
 		return nil, err
 	}

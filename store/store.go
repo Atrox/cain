@@ -24,7 +24,7 @@ func init() {
 }
 
 func Get(i interface{}) error {
-	location := locationFromInterface(i)
+	location := Path(i)
 
 	file, err := ioutil.ReadFile(location)
 	if err != nil {
@@ -40,7 +40,7 @@ func Get(i interface{}) error {
 }
 
 func Save(i interface{}) error {
-	location := locationFromInterface(i)
+	location := Path(i)
 
 	b, err := yaml.Marshal(i)
 	if err != nil {
@@ -67,19 +67,10 @@ func GetOrCreate(i interface{}) error {
 	return nil
 }
 
-func Exists(name string) bool {
-	_, err := os.Stat(Path(name))
-	if err != nil {
-		return false
-	}
-
-	return true
+func Path(i interface{}) string {
+	return extendPath(strings.ToLower(reflect.TypeOf(i).Elem().Name()))
 }
 
-func Path(name string) string {
+func extendPath(name string) string {
 	return filepath.Join(Base, name+".yaml")
-}
-
-func locationFromInterface(i interface{}) string {
-	return Path(strings.ToLower(reflect.TypeOf(i).Elem().Name()))
 }
