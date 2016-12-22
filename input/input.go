@@ -14,7 +14,8 @@ func Prompt(question string, fn ValidatorFunction) interface{} {
 	var out interface{}
 
 	for {
-		fmt.Print(fmt.Sprintf("[?] %s: ", question))
+		fmt.Printf("[?] %s: ", question)
+
 		input, err := getInput()
 		if err != nil {
 			log.Fatal(err)

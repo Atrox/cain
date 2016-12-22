@@ -45,7 +45,7 @@ var defaultNamingSchemes = NamingSchemes{
 
 func NewConfig() *Config {
 	return &Config{
-		LockFile:      filepath.Join(Base, "filebot.lock"),
+		LockFile:      filepath.Join(base, "filebot.lock"),
 		AutoUpdate:    true,
 		NamingSchemes: defaultNamingSchemes,
 	}

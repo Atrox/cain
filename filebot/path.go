@@ -4,8 +4,7 @@ import "os/exec"
 
 const executableName = "filebot"
 
-// Path looks for `filebot` executable
+// Path to `filebot` executable
 func Path() (string, error) {
-	path, err := exec.LookPath(executableName)
-	return path, err
+	return exec.LookPath(executableName)
 }

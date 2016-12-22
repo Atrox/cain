@@ -12,7 +12,7 @@ import (
 	yaml "gopkg.in/yaml.v2"
 )
 
-var Base string
+var base string
 
 func init() {
 	home, err := homedir.Dir()
@@ -20,7 +20,7 @@ func init() {
 		log.Fatal(err)
 	}
 
-	Base = filepath.Join(home, ".config", "cain")
+	base = filepath.Join(home, ".config", "cain")
 }
 
 func Get(i interface{}) error {
@@ -72,5 +72,5 @@ func Path(i interface{}) string {
 }
 
 func extendPath(name string) string {
-	return filepath.Join(Base, name+".yaml")
+	return filepath.Join(base, name+".yaml")
 }
