@@ -55,22 +55,7 @@ func Save(i interface{}) error {
 	return ioutil.WriteFile(location, b, 0644)
 }
 
-func GetOrCreate(i interface{}) error {
-	err := Get(i)
-	if err != nil {
-		err := Save(i)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
 func Path(i interface{}) string {
-	return extendPath(strings.ToLower(reflect.TypeOf(i).Elem().Name()))
-}
-
-func extendPath(name string) string {
+	name := strings.ToLower(reflect.TypeOf(i).Elem().Name())
 	return filepath.Join(base, name+".yaml")
 }

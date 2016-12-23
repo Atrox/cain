@@ -48,6 +48,8 @@ func (u *Updater) Run() error {
 		return nil
 	}
 
+	b.Println("Updating...", "", "Please don't close me while I'm working")
+
 	// fetch the update and apply it
 	err := update.Apply()
 	if err != nil {

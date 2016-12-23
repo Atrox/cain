@@ -16,7 +16,8 @@ func runCommand(c *cli.Context) error {
 	conf := &store.Config{}
 	err := store.Get(conf)
 	if err != nil {
-		return err
+		b.Println("Configuration not found", "Starting 'cain setup'")
+		return setupCommand(c)
 	}
 
 	fb, err := filebot.New(conf)
@@ -41,7 +42,7 @@ func setupCommand(c *cli.Context) error {
 	}
 
 	conf := store.NewConfig()
-	store.GetOrCreate(conf)
+	store.Get(conf)
 
 	b.Println("Configure destinations for sorted files")
 

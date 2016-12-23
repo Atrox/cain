@@ -14,9 +14,9 @@ import (
 type FileBot struct {
 	RetrievePath string
 
-	exePath string
-	config  *store.Config
-	args    *args
+	executable string
+	config     *store.Config
+	args       *args
 }
 
 func New(conf *store.Config) (*FileBot, error) {
@@ -26,9 +26,9 @@ func New(conf *store.Config) (*FileBot, error) {
 	}
 
 	return &FileBot{
-		exePath: path,
-		config:  conf,
-		args:    newArgs(),
+		executable: path,
+		config:     conf,
+		args:       newArgs(),
 	}, nil
 }
 
@@ -49,7 +49,7 @@ func (f *FileBot) Execute() error {
 
 	f.args.Add(filepath.Clean(retrievePath))
 
-	cmd := exec.Command(f.exePath, *f.args...)
+	cmd := exec.Command(f.executable, *f.args...)
 
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
