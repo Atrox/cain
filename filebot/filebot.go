@@ -75,18 +75,13 @@ func (f *FileBot) addNotifiers() {
 	value := reflect.ValueOf(&f.config.Notifiers).Elem()
 
 	for i := 0; i < typ.NumField(); i++ {
-		typeName := typ.Field(i).Name
-
+		name := typ.Field(i).Name
 		field := value.Field(i)
-		fieldType := field.Type()
 
-		// Ignore fields that don't have the same type as a string
-		if fieldType.Name() != "string" {
-			continue
+		switch in := field.Interface().(type) {
+		case string:
+			f.args.AddDefinition(strings.ToLower(name), in)
 		}
-
-		str := field.Interface().(string)
-		f.args.AddDefinition(strings.ToLower(typeName), str)
 	}
 }
 

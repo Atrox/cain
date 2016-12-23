@@ -10,9 +10,7 @@ import (
 
 type ValidatorFunction func(string) (interface{}, error)
 
-func Prompt(question string, fn ValidatorFunction) interface{} {
-	var out interface{}
-
+func Prompt(question string, fn ValidatorFunction) (out interface{}) {
 	for {
 		fmt.Printf("[?] %s: ", question)
 
@@ -28,8 +26,7 @@ func Prompt(question string, fn ValidatorFunction) interface{} {
 
 		fmt.Printf("[!] Error: %s\n", err.Error())
 	}
-
-	return out
+	return
 }
 
 // Create a single reader which can be called multiple times
