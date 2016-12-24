@@ -57,20 +57,12 @@ var appUpdater *updater.Updater
 func before(c *cli.Context) error {
 	fmt.Println(logo)
 
-	// use auto update
-	var autoUpdate bool
-
 	// get configuration
 	conf := &store.Config{}
-	err := store.Get(conf)
-	if err != nil {
-		autoUpdate = false
-	} else {
-		autoUpdate = conf.AutoUpdate
-	}
+	store.Get(conf)
 
 	// check for updates in background
-	appUpdater = updater.New(autoUpdate)
+	appUpdater = updater.New(conf.AutoUpdate)
 
 	return nil
 }

@@ -1,8 +1,8 @@
 hash: f12bc5a2c859f02045e243c99d9c4b146332ad2faf7177198d9b5c2253d9a33b
-updated: 2016-12-12T13:35:51.051187373+01:00
+updated: 2016-12-24T13:10:27.3060631+01:00
 imports:
 - name: github.com/atrox/box
-  version: 96efdfa4375a791982d2c7db614d27f10cc87f7d
+  version: 3dc37d159ab1baa7f7d7031778de804aad81d13d
 - name: github.com/equinox-io/equinox
   version: 6f97d0d3970881d3e53dd6f547a41109eb055e54
   subpackages:

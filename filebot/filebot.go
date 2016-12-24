@@ -33,7 +33,7 @@ func New(conf *store.Config) (*FileBot, error) {
 }
 
 func (f *FileBot) Execute() error {
-	retrievePath := f.config.RetrievePath
+	retrievePath := f.config.DefaultRetrievePath
 
 	// if path flag specified, overwrite retrievePath
 	if f.RetrievePath != "" {

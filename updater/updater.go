@@ -62,13 +62,21 @@ func (u *Updater) Run() error {
 }
 
 func (u *Updater) ForceRun() error {
-	update := <-u.updateAvailable
-	if update == nil {
-		return nil
+	var opts equinox.Options
+	err := opts.SetPublicKeyPEM(publicKey)
+	if err != nil {
+		log.Fatal(err)
 	}
 
+	update, err := equinox.Check(appID, opts)
+	if err != nil {
+		return err
+	}
+
+	b.Println("Updating...", "", "Please don't close me while I'm working")
+
 	// fetch the update and apply it
-	err := update.Apply()
+	err = update.Apply()
 	if err != nil {
 		return err
 	}

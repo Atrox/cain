@@ -3,9 +3,9 @@ package store
 import "path/filepath"
 
 type Config struct {
-	RetrievePath string `yaml:"defaultRetrievePath"`
-	LockFile     string `yaml:"lockFile"`
-	AutoUpdate   bool   `yaml:"autoUpdate"`
+	DefaultRetrievePath string `yaml:"defaultRetrievePath"`
+	LockFile            string `yaml:"lockFile"`
+	AutoUpdate          bool   `yaml:"autoUpdate"`
 
 	Destinations  Destinations  `yaml:"destinations"`
 	NamingSchemes NamingSchemes `yaml:"namingSchemes"`

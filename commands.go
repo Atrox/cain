@@ -53,7 +53,7 @@ func setupCommand(c *cli.Context) error {
 	b.Println("Configure default retrieve path for unsorted files",
 		"Enter nothing to skip this step and require '--path'")
 
-	conf.RetrievePath = retrievePath(conf.RetrievePath)
+	conf.DefaultRetrievePath = retrievePath(conf.DefaultRetrievePath)
 
 	b.Println("Do you want to enable automatic updates?", "",
 		"If enabled and updates are available,",
