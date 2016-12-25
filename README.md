@@ -1,12 +1,15 @@
 # CAIN - Simple Media Management
 [<img src="https://files.atrox.me/selif/scroll.png" align="right" width="100">](https://github.com/Atrox/cain)
 
-Cain is using [FileBot][filebot] under the hood to organize your files and plays very well with your favorite **Torrent/Download** Client.
+Cain *automatically* organises your movies and TV-shows according to your configuration.
+Your favourite torrent/download client should call Cain after the download has finished and Cain will do the rest.
+
+> Cain is still WIP and may very well contain bugs. Please feel free to report those [here][issues]
 
 ## Features
 - Fully automated media management
 - Simple to setup and easy to use
-- Plays well with your Downloader, Torrent Client or whatever else you like to use
+- Plays well with your [Downloader][download-client], [Torrent][torrent-client] Client or whatever else you like to use
 - [FileBot][filebot] under the hood - *No need to reinvent the wheel*
 
 ## Installation
@@ -16,7 +19,7 @@ Cain is using [FileBot][filebot] under the hood to organize your files and plays
 
 ### Install
 Installation packages are available for all major operating systems:
-- [Windows][dl-win]
+- [Windows 64-bit][dl-win-64] ([32-bit][dl-win-32])
 - [MacOS][dl-mac]
     - Brew: `brew install eqnxio/atrox/cain`
 - [Linux][dl-linux]
@@ -27,8 +30,7 @@ Installation packages are available for all major operating systems:
 Before you can use Cain you need to configure some basic things first. Cain provides some sensitive defaults to get started with.
 
 Run `cain setup` to interactively configure Cain. After you finished the setup process you are pretty much ready to go.
-
-How to configure your Torrent/Download Client to automatically run Cain: Wiki Link here
+Now you can configure your [Downloader][download-client] and/or [Torrent][torrent-client] Client to automatically run Cain after finishing downloading.
 
 ## Configuration
 - **DefaultRetrievePath**: Where to get the unsorted media from
@@ -62,15 +64,22 @@ Cain can also automatically notify specific apps for changes.
 
 Everyone is encouraged to help improve this project. Here are a few ways you can help:
 
-- [Report bugs](https://github.com/atrox/cain/issues)
-- Fix bugs and [submit pull requests](https://github.com/atrox/cain/pulls)
+- [Report bugs][issues]
+- Fix bugs and [submit pull requests][pulls]
 - Write, clarify, or fix documentation
 - Suggest or add new features
 
-[dl-win]: https://bin.equinox.io/c/Dyvh1T2kPn/cain-stable-windows-amd64.msi
+[dl-win-64]: https://bin.equinox.io/c/Dyvh1T2kPn/cain-stable-windows-amd64.msi
+[dl-win-32]: https://bin.equinox.io/c/Dyvh1T2kPn/cain-stable-windows-386.msi
 [dl-mac]: https://bin.equinox.io/c/Dyvh1T2kPn/cain-stable-darwin-amd64.pkg
 [dl-linux]: https://dl.equinox.io/atrox/cain/stable
 [dl-page]: https://dl.equinox.io/atrox/cain/stable
 
 [filebot]: http://www.filebot.net/
 [filebot-naming]: http://www.filebot.net/naming.html
+
+[download-client]: https://github.com/Atrox/cain/wiki/Download-Clients
+[torrent-client]: https://github.com/Atrox/cain/wiki/Torrent-Clients
+
+[issues]: https://github.com/atrox/cain/issues
+[pulls]: https://github.com/atrox/cain/pulls
