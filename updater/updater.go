@@ -61,7 +61,7 @@ func (u *Updater) Run() error {
 	return nil
 }
 
-func (u *Updater) ForceRun() error {
+func ForceRun() error {
 	var opts equinox.Options
 	err := opts.SetPublicKeyPEM(publicKey)
 	if err != nil {

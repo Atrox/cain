@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/atrox/cain/commands"
 	"github.com/atrox/cain/store"
 	"github.com/atrox/cain/updater"
 	"github.com/urfave/cli"
@@ -11,42 +12,22 @@ import (
 
 const Version = "v0.2.0"
 
-var app *cli.App
-
 func main() {
-	app = &cli.App{
+	cmds := []*cli.Command{
+		commands.SetupCommand,
+		commands.RunCommand,
+		commands.UpdateCommand,
+	}
+
+	app := &cli.App{
 		Name:     "cain",
 		HelpName: "cain",
 		Usage:    "automated media management",
 		Version:  Version,
 		Authors:  []*cli.Author{{Name: "Atrox", Email: "mail@atrox.me"}},
-		Commands: []*cli.Command{
-			{
-				Name:    "setup",
-				Aliases: []string{"s"},
-				Usage:   "create config file with sensitive defaults",
-				Action:  setupCommand,
-			},
-			{
-				Name:    "run",
-				Aliases: []string{"r"},
-				Usage:   "run cain",
-				Action:  runCommand,
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:  "path, p",
-						Usage: "custom path",
-					},
-				},
-			},
-			{
-				Name:   "update",
-				Usage:  "update cain to the newest version (if available)",
-				Action: updateCommand,
-			},
-		},
-		Before: before,
-		After:  after,
+		Commands: cmds,
+		Before:   before,
+		After:    after,
 	}
 
 	app.Run(os.Args)
