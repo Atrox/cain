@@ -19,4 +19,4 @@ var logo = strings.TrimLeft(fmt.Sprintf(`
 \/____________/\_\___\     /____/_/\/_________/\/_/     \/_/       
 ============================================================
  Version %s                                 by Atrox.ME
-`, Version), "\n")
+`, version), "\n")

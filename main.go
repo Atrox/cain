@@ -10,7 +10,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-const Version = "v0.2.0"
+var version = "master"
 
 func main() {
 	cmds := []*cli.Command{
@@ -23,7 +23,7 @@ func main() {
 		Name:     "cain",
 		HelpName: "cain",
 		Usage:    "automated media management",
-		Version:  Version,
+		Version:  version,
 		Authors:  []*cli.Author{{Name: "Atrox", Email: "mail@atrox.me"}},
 		Commands: cmds,
 		Before:   before,
