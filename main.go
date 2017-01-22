@@ -38,22 +38,23 @@ var appUpdater *updater.Updater
 func before(c *cli.Context) error {
 	fmt.Println(logo)
 
-	// get configuration
-	conf := &store.Config{}
-	store.Get(conf)
+	// check only for updates if binary is versioned
+	if version != "master" {
+		// get configuration
+		conf := new(store.Config)
+		store.Get(conf)
 
-	// check for updates in background
-	appUpdater = updater.New(conf.AutoUpdate)
+		// check for updates in background
+		appUpdater = updater.New(conf.AutoUpdate)
+	}
 
 	return nil
 }
 
 func after(c *cli.Context) error {
-	// wait for update request to finish
-	err := appUpdater.Run()
-	if err != nil {
-		return err
+	if appUpdater == nil {
+		return nil
 	}
 
-	return nil
+	return appUpdater.Run()
 }

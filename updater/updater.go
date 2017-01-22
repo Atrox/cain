@@ -20,17 +20,14 @@ type Updater struct {
 }
 
 func New(autoUpdate bool) *Updater {
-	updater := &Updater{}
+	updater := new(Updater)
 	store.Get(updater)
 
-	up := &Updater{
-		NextCheck:       updater.NextCheck,
-		automaticUpdate: autoUpdate,
-		updateAvailable: make(chan *equinox.Response),
-	}
+	updater.automaticUpdate = autoUpdate
+	updater.updateAvailable = make(chan *equinox.Response)
 
-	go up.check()
-	return up
+	go updater.check()
+	return updater
 }
 
 func (u *Updater) Run() error {
@@ -117,6 +114,6 @@ func (u *Updater) shouldCheck() bool {
 func (u *Updater) setNext() {
 	now := time.Now().UTC()
 
-	updater := &Updater{NextCheck: now.AddDate(0, 0, 1)}
-	store.Save(updater)
+	u.NextCheck = now.AddDate(0, 0, 1)
+	store.Save(u)
 }
