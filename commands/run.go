@@ -6,6 +6,7 @@ import (
 	"github.com/atrox/cain/filebot"
 	"github.com/atrox/cain/store"
 	"github.com/urfave/cli"
+	"os"
 )
 
 var RunCommand = &cli.Command{
@@ -15,8 +16,12 @@ var RunCommand = &cli.Command{
 	Action:  runAction,
 	Flags: []cli.Flag{
 		&cli.StringFlag{
-			Name:  "path, p",
+			Name:  "path",
 			Usage: "custom path",
+		},
+		&cli.StringFlag{
+			Name:  "path-env",
+			Usage: "get path from specified environment variable",
 		},
 	},
 }
@@ -29,11 +34,16 @@ func runAction(c *cli.Context) error {
 		return setupAction(c)
 	}
 
+	path := c.String("path")
+	if c.String("path-env") != "" {
+		path = os.Getenv(c.String("path-env"))
+	}
+
 	fb, err := filebot.New(conf)
 	if err != nil {
 		return err
 	}
-	fb.RetrievePath = c.String("path")
+	fb.RetrievePath = path
 
 	err = fb.Execute()
 	if err != nil {

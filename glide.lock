@@ -1,5 +1,5 @@
 hash: f12bc5a2c859f02045e243c99d9c4b146332ad2faf7177198d9b5c2253d9a33b
-updated: 2016-12-24T13:10:27.3060631+01:00
+updated: 2017-01-30T21:58:37.2040098+01:00
 imports:
 - name: github.com/atrox/box
   version: 3dc37d159ab1baa7f7d7031778de804aad81d13d
@@ -16,5 +16,5 @@ imports:
 - name: github.com/urfave/cli
   version: e485446237011b8abac93919242e6f059ad56c87
 - name: gopkg.in/yaml.v2
-  version: a5b47d31c556af34a302ce5d659e6fea44d90de0
+  version: 4c78c975fe7c825c6d1466c42be594d1d6f3aba6
 testImports: []
