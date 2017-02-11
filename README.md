@@ -36,6 +36,7 @@ Now you can configure your [Downloader][download-client] and/or [Torrent][torren
 - **DefaultRetrievePath**: Where to get the unsorted media from
     - If not specified, parameter `--path` is required.
 - **AutoUpdate**: Enable/Disable automatic updates.
+- **Language**: (2-letter language code)[http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes] (default: en)
 
 ### Naming Schemes
 Please see the [FileBot Documentation][filebot-naming] for more informations on this subject.

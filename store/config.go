@@ -6,6 +6,7 @@ type Config struct {
 	DefaultRetrievePath string `yaml:"defaultRetrievePath"`
 	LockFile            string `yaml:"lockFile"`
 	AutoUpdate          bool   `yaml:"autoUpdate"`
+	Language            string `yaml:"language"`
 
 	Destinations  Destinations  `yaml:"destinations"`
 	NamingSchemes NamingSchemes `yaml:"namingSchemes"`

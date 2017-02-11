@@ -44,6 +44,10 @@ func (f *FileBot) Execute() error {
 		return fmt.Errorf("[!] '--path' or 'defaultRetrievePath' not specified")
 	}
 
+	if f.config.Language != "" {
+		f.args.Add("--lang", f.config.Language)
+	}
+
 	f.addPaths()
 	f.addNotifiers()
 

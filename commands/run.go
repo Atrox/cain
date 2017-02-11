@@ -2,11 +2,11 @@ package commands
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/atrox/cain/filebot"
 	"github.com/atrox/cain/store"
 	"github.com/urfave/cli"
-	"os"
 )
 
 var RunCommand = &cli.Command{
