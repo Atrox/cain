@@ -64,6 +64,8 @@ Cain can also automatically notify specific apps for changes.
 - `cain setup`: Configure Cain interactively.
 - `cain run`: Run Cain *(this should idealy be run by your Download/Torrent Client)*
     - `--path`: Where Cain should look for media to sort. This Parameter is required if `DefaultRetrievePath` is not set.
+    - `--path-env`: Get path from specified environment variable.
+    - `--non-strict`: Enable to non strictly match for movies/tv-shows. Be aware that this could result in wrong matches.
 
 ## Contributing
 
