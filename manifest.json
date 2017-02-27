@@ -1,0 +1,19 @@
+{
+    "dependencies": {
+        "github.com/atrox/box": {
+            "branch": "master"
+        },
+        "github.com/equinox-io/equinox": {
+            "branch": "master"
+        },
+        "github.com/go-yaml/yaml": {
+            "version": "v2"
+        },
+        "github.com/mitchellh/go-homedir": {
+            "branch": "master"
+        },
+        "github.com/urfave/cli": {
+            "branch": "v2"
+        }
+    }
+}
