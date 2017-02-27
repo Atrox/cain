@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/atrox/cain/commands"
 	"github.com/atrox/cain/store"
@@ -10,7 +11,10 @@ import (
 	"github.com/urfave/cli"
 )
 
-var version = "master"
+var (
+	version    = "master"
+	appUpdater *updater.Updater
+)
 
 func main() {
 	cmds := []*cli.Command{
@@ -32,8 +36,6 @@ func main() {
 
 	app.Run(os.Args)
 }
-
-var appUpdater *updater.Updater
 
 func before(c *cli.Context) error {
 	fmt.Println(logo)
@@ -58,3 +60,19 @@ func after(c *cli.Context) error {
 
 	return appUpdater.Run()
 }
+
+var logo = strings.TrimLeft(fmt.Sprintf(`
+          _             _                    _          _          
+        /\ \           / /\                 /\ \       /\ \     _  
+       /  \ \         / /  \                \ \ \     /  \ \   /\_\
+      / /\ \ \       / / /\ \               /\ \_\   / /\ \ \_/ / /
+     / / /\ \ \     / / /\ \ \             / /\/_/  / / /\ \___/ / 
+    / / /  \ \_\   / / /  \ \ \           / / /    / / /  \/____/  
+   / / /    \/_/  / / /___/ /\ \         / / /    / / /    / / /   
+  / / /          / / /_____/ /\ \       / / /    / / /    / / /    
+ / / /________  / /_________/\ \ \  ___/ / /__  / / /    / / /     
+/ / /_________\/ / /_       __\ \_\/\__\/_/___\/ / /    / / /      
+\/____________/\_\___\     /____/_/\/_________/\/_/     \/_/       
+============================================================
+ Version %s                                 by Atrox.ME
+`, version), "\n")
