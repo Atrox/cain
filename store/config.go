@@ -5,8 +5,11 @@ import "path/filepath"
 type Config struct {
 	DefaultRetrievePath string `yaml:"defaultRetrievePath"`
 	LockFile            string `yaml:"lockFile"`
+	LogFile             string `yaml:"logFile"`
 	AutoUpdate          bool   `yaml:"autoUpdate"`
 	Language            string `yaml:"language"`
+	NonStrictMatching   bool   `yaml:"nonStrictMatching"`
+	CleanupAfterwards   bool   `yaml:"cleanupAfterwards"`
 
 	Destinations  Destinations  `yaml:"destinations"`
 	NamingSchemes NamingSchemes `yaml:"namingSchemes"`
@@ -47,6 +50,8 @@ var defaultNamingSchemes = NamingSchemes{
 func NewConfig() *Config {
 	return &Config{
 		LockFile:      filepath.Join(base, "filebot.lock"),
+		LogFile:       filepath.Join(base, "filebot.log"),
+		Language:      "en",
 		AutoUpdate:    true,
 		NamingSchemes: defaultNamingSchemes,
 	}

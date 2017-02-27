@@ -8,9 +8,6 @@ func newArgs() *args {
 	return &args{
 		"-script", "fn:amc",
 		"--action", "move",
-		"--log-file", "amc.log",
-		"--def", "clean=y",
-		"-non-strict",
 	}
 }
 

@@ -36,6 +36,10 @@ func setupAction(c *cli.Context) error {
 
 	conf.DefaultRetrievePath = askRetrievePath(conf.DefaultRetrievePath)
 
+	b.Println("Automatic Cleanup", "", "Should Cain automatically cleanup remaining unused files?")
+
+	conf.CleanupAfterwards = input.Prompt("Enable automatic cleanup afterwards (Y/n)", input.BooleanValidator(true)).(bool)
+
 	b.Println("Do you want to enable automatic updates?", "",
 		"If enabled and updates are available,",
 		"Cain will update itself without interruptions")

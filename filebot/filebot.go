@@ -12,7 +12,8 @@ import (
 )
 
 type FileBot struct {
-	RetrievePath string
+	RetrievePath      string
+	NonStrictMatching bool
 
 	executable string
 	config     *store.Config
@@ -46,6 +47,18 @@ func (f *FileBot) Execute() error {
 
 	if f.config.Language != "" {
 		f.args.Add("--lang", f.config.Language)
+	}
+
+	if f.config.LogFile != "" {
+		f.args.Add("--log-file", filepath.Clean(f.config.LogFile))
+	}
+
+	if f.config.CleanupAfterwards {
+		f.args.AddDefinition("clean", "y")
+	}
+
+	if f.NonStrictMatching || f.config.NonStrictMatching {
+		f.args.Add("-non-strict")
 	}
 
 	f.addPaths()

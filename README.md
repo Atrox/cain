@@ -33,28 +33,32 @@ Run `cain setup` to interactively configure Cain. After you finished the setup p
 Now you can configure your [Downloader][download-client] and/or [Torrent][torrent-client] Client to automatically run Cain after finishing downloading.
 
 ## Configuration
-- **DefaultRetrievePath**: Where to get the unsorted media from
+> Location: `~/.config/cain/config.yaml`
+
+- **defaultRetrievePath**: Where to get the unsorted media from
     - If not specified, parameter `--path` is required.
-- **AutoUpdate**: Enable/Disable automatic updates.
-- **Language**: (2-letter language code)[http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes] (default: en)
+- **autoUpdate**: Enable/Disable automatic updates.
+- **language**: (2-letter language code)[http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes] (default: en)
+- **nonStrictMatching**: Enable to non strictly match for movies/tv-shows. Be aware that this could result in wrong matches.
+- **cleanupAfterwards**: Cain will automatically clean the remaining unused/unneeded files after moving the matched files.
 
 ### Naming Schemes
 Please see the [FileBot Documentation][filebot-naming] for more informations on this subject.
 
 #### Default Naming Schemes
-- **Movie**: `{n} ({y})/{n}`
-- **Series/Anime**: `{n}/Season {s.pad(2)}/{n} - {s00e00} - {t}`
+- **movie**: `{n} ({y})/{n}`
+- **series/anime**: `{n}/Season {s.pad(2)}/{n} - {s00e00} - {t}`
 
 ### Notifiers
 Cain can also automatically notify specific apps for changes.
 
-- **Kodi**: `host[:port]` Tell the given Kodi/XBMC instance to rescan it's library
-- **Plex**: `host[:token]` Tell the given Plex instance to rescan it's library. Plex Home instances require an [authentication token](https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token).
-- **Emby**: `host:apikey` Tell the given Emby instance to rescan it's library.
-- **Pushover**: `userkey` Send update notifications to your devices via Pushover.
-- **PushBullet**: `apikey` Send full reports to all your PushBullet devices
-- **Gmail**: `username:password` Use the following gmail account to send and receive full reports. You must use an [App Password](https://support.google.com/accounts/answer/185833?hl=en) for security reasons.
-- **Mail**: `host:port:from[:username:password]` Send email via custom mail server
+- **kodi**: `host[:port]` Tell the given Kodi/XBMC instance to rescan it's library
+- **plex**: `host[:token]` Tell the given Plex instance to rescan it's library. Plex Home instances require an [authentication token](https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token).
+- **emby**: `host:apikey` Tell the given Emby instance to rescan it's library.
+- **pushover**: `userkey` Send update notifications to your devices via Pushover.
+- **pushBullet**: `apikey` Send full reports to all your PushBullet devices
+- **gmail**: `username:password` Use the following gmail account to send and receive full reports. You must use an [App Password](https://support.google.com/accounts/answer/185833?hl=en) for security reasons.
+- **mail**: `host:port:from[:username:password]` Send email via custom mail server
 
 ## Command line reference
 - `cain setup`: Configure Cain interactively.

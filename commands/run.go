@@ -23,6 +23,10 @@ var RunCommand = &cli.Command{
 			Name:  "path-env",
 			Usage: "get path from specified environment variable",
 		},
+		&cli.BoolFlag{
+			Name:  "non-strict",
+			Usage: "use non strict matching, be aware that it could match the wrong media that way",
+		},
 	},
 }
 
@@ -44,6 +48,7 @@ func runAction(c *cli.Context) error {
 		return err
 	}
 	fb.RetrievePath = path
+	fb.NonStrictMatching = c.Bool("non-strict")
 
 	err = fb.Execute()
 	if err != nil {
