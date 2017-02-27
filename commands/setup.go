@@ -36,6 +36,12 @@ func setupAction(c *cli.Context) error {
 
 	conf.DefaultRetrievePath = askRetrievePath(conf.DefaultRetrievePath)
 
+	b.Println("Non Strict Matching", "",
+		"Should we try to match the media even if filebot is not 100% sure?",
+		"Can lead to better matches and less manual work but also gets it sometimes wrong")
+
+	conf.NonStrictMatching = input.Prompt("Enable non strict matching (y/n)", input.BooleanValidator(false)).(bool)
+
 	b.Println("Automatic Cleanup", "", "Should Cain automatically cleanup remaining unused files?")
 
 	conf.CleanupAfterwards = input.Prompt("Enable automatic cleanup afterwards (Y/n)", input.BooleanValidator(true)).(bool)
