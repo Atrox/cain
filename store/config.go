@@ -21,6 +21,7 @@ type Destinations struct {
 	Movie  string `yaml:"movie"`
 	Series string `yaml:"series"`
 	Anime  string `yaml:"anime"`
+	Music  string `yaml:"music"`
 }
 
 // NamingSchemes templates
@@ -28,6 +29,7 @@ type NamingSchemes struct {
 	Movie  string `yaml:"movie"`
 	Series string `yaml:"series"`
 	Anime  string `yaml:"anime"`
+	Music  string `yaml:"music"`
 }
 
 // Notifiers configuration
@@ -45,6 +47,7 @@ var defaultNamingSchemes = NamingSchemes{
 	Movie:  "{n} ({y})/{n}",
 	Series: "{n}/Season {s.pad(2)}/{n} - {s00e00} - {t}",
 	Anime:  "{n}/Season {s.pad(2)}/{n} - {s00e00} - {t}",
+	Music:  "{n}/{album}{pi.pad(2)}{artist} - {t}",
 }
 
 func NewConfig() *Config {

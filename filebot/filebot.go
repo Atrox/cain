@@ -79,7 +79,7 @@ func (f *FileBot) Execute() error {
 	return nil
 }
 
-var paths = []string{"excludeList", "movieFormat", "seriesFormat", "animeFormat"}
+var paths = []string{"excludeList", "movieFormat", "seriesFormat", "animeFormat", "musicFormat"}
 
 func (f *FileBot) addPaths() {
 	for _, name := range paths {
@@ -128,6 +128,13 @@ func (f *FileBot) getPath(name string) string {
 		}
 
 		return filepath.Join(f.config.Destinations.Anime, f.config.NamingSchemes.Anime)
+	case "musicFormat":
+		if f.config.Destinations.Music == "" {
+			return ""
+		}
+
+		f.args.AddDefinition("music", "y")
+		return filepath.Join(f.config.Destinations.Music, f.config.NamingSchemes.Music)
 	default:
 		return ""
 	}

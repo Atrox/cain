@@ -48,6 +48,7 @@ Please see the [FileBot Documentation][filebot-naming] for more informations on 
 #### Default Naming Schemes
 - **movie**: `{n} ({y})/{n}`
 - **series/anime**: `{n}/Season {s.pad(2)}/{n} - {s00e00} - {t}`
+- **music**: `{n}/{album}{pi.pad(2)}{artist} - {t}`
 
 ### Notifiers
 Cain can also automatically notify specific apps for changes.
