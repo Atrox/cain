@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"github.com/atrox/cain/commands"
-	"github.com/atrox/cain/store"
+	"github.com/atrox/cain/config"
 	"github.com/atrox/cain/updater"
 	"github.com/urfave/cli"
 )
@@ -43,8 +43,8 @@ func before(c *cli.Context) error {
 	// check only for updates if binary is versioned
 	if version != "master" {
 		// get configuration
-		conf := new(store.Config)
-		store.Get(conf)
+		conf := new(config.Config)
+		config.Storage.Get(conf)
 
 		// check for updates in background
 		appUpdater = updater.New(conf.AutoUpdate)

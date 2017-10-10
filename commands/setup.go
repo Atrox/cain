@@ -3,8 +3,8 @@ package commands
 import (
 	"fmt"
 
+	"github.com/atrox/cain/config"
 	"github.com/atrox/cain/filebot"
-	"github.com/atrox/cain/store"
 	"github.com/atrox/input"
 	"github.com/urfave/cli"
 )
@@ -22,8 +22,8 @@ func setupAction(c *cli.Context) error {
 		b.Println("## WARNING ##", "", "FileBot is not installed", "Cain will not work without FileBot")
 	}
 
-	conf := store.NewConfig()
-	store.Get(conf)
+	conf := config.NewConfig()
+	config.Storage.Get(conf)
 
 	b.Println("Configure destinations for sorted files")
 
@@ -62,14 +62,14 @@ func setupAction(c *cli.Context) error {
 		conf.AutoUpdate = true
 	}
 
-	err = store.Save(conf)
+	err = config.Storage.Save(conf)
 	if err != nil {
 		return cli.Exit(err, 1)
 	}
 
 	b.Println("Config successfully saved",
 		"You can now use 'cain run' to sort your media!",
-		"", fmt.Sprintf("Location: %s", store.Path(conf)))
+		"", fmt.Sprintf("Location: %s", config.Storage.Path(conf)))
 
 	return nil
 }

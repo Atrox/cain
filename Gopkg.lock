@@ -20,6 +20,12 @@
   version = "v1.1.0"
 
 [[projects]]
+  name = "github.com/atrox/store"
+  packages = ["."]
+  revision = "0961c830bdaf233224b8861f7a65f8c9e11db423"
+  version = "v1.0.1"
+
+[[projects]]
   branch = "master"
   name = "github.com/equinox-io/equinox"
   packages = [".","internal/go-update","internal/go-update/internal/binarydist","internal/go-update/internal/osext","internal/osext","proto"]
@@ -40,6 +46,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "34da4877f2e352fe5649e8d7b6379b13d9dfdfe96b414b4c191bac02b2ed44c0"
+  inputs-digest = "9321fa9c5df11da6d3ee0d88476b21aab5460ed90082475980b17acf8bb7bab4"
   solver-name = "gps-cdcl"
   solver-version = 1

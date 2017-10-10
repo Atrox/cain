@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/atrox/box"
-	"github.com/atrox/cain/store"
+	"github.com/atrox/cain/config"
 	"github.com/equinox-io/equinox"
 )
 
@@ -21,7 +21,7 @@ type Updater struct {
 
 func New(autoUpdate bool) *Updater {
 	updater := new(Updater)
-	store.Get(updater)
+	config.Storage.Get(updater)
 
 	updater.automaticUpdate = autoUpdate
 	updater.updateAvailable = make(chan *equinox.Response)
@@ -115,5 +115,5 @@ func (u *Updater) setNext() {
 	now := time.Now().UTC()
 
 	u.NextCheck = now.AddDate(0, 0, 1)
-	store.Save(u)
+	config.Storage.Save(u)
 }

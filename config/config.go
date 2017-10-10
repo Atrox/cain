@@ -1,4 +1,4 @@
-package store
+package config
 
 import "path/filepath"
 
@@ -52,8 +52,8 @@ var defaultNamingSchemes = NamingSchemes{
 
 func NewConfig() *Config {
 	return &Config{
-		LockFile:      filepath.Join(base, "filebot.lock"),
-		LogFile:       filepath.Join(base, "filebot.log"),
+		LockFile:      filepath.Join(Storage.Base, "filebot.lock"),
+		LogFile:       filepath.Join(Storage.Base, "filebot.log"),
 		Language:      "en",
 		AutoUpdate:    true,
 		NamingSchemes: defaultNamingSchemes,

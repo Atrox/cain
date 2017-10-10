@@ -8,7 +8,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/atrox/cain/store"
+	"github.com/atrox/cain/config"
 )
 
 type FileBot struct {
@@ -16,11 +16,11 @@ type FileBot struct {
 	NonStrictMatching bool
 
 	executable string
-	config     *store.Config
+	config     *config.Config
 	args       *args
 }
 
-func New(conf *store.Config) (*FileBot, error) {
+func New(conf *config.Config) (*FileBot, error) {
 	path, err := Path()
 	if err != nil {
 		return nil, err

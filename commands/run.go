@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/atrox/cain/config"
 	"github.com/atrox/cain/filebot"
-	"github.com/atrox/cain/store"
 	"github.com/urfave/cli"
 )
 
@@ -31,8 +31,8 @@ var RunCommand = &cli.Command{
 }
 
 func runAction(c *cli.Context) error {
-	conf := &store.Config{}
-	err := store.Get(conf)
+	conf := &config.Config{}
+	err := config.Storage.Get(conf)
 	if err != nil {
 		b.Println("Configuration not found", "Starting 'cain setup'")
 		return setupAction(c)
