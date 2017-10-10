@@ -12,5 +12,9 @@ var UpdateCommand = &cli.Command{
 }
 
 func updateAction(c *cli.Context) error {
-	return updater.ForceRun()
+	err := updater.ForceRun()
+	if err != nil {
+		return cli.Exit(err, 1)
+	}
+	return nil
 }

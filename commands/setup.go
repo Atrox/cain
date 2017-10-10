@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/atrox/cain/filebot"
-	"github.com/atrox/cain/input"
 	"github.com/atrox/cain/store"
+	"github.com/atrox/input"
 	"github.com/urfave/cli"
 )
 
@@ -40,21 +40,31 @@ func setupAction(c *cli.Context) error {
 		"Should we try to match the media even if filebot is not 100% sure?",
 		"Can lead to better matches and less manual work but also gets it sometimes wrong")
 
-	conf.NonStrictMatching = input.Prompt("Enable non strict matching (y/n)", input.BooleanValidator(false)).(bool)
+	conf.NonStrictMatching = input.Prompt("Enable non strict matching (y/n)", input.RequiredValidator, input.BooleanValidator).(bool)
 
 	b.Println("Automatic Cleanup", "", "Should Cain automatically cleanup remaining unused files?")
 
-	conf.CleanupAfterwards = input.Prompt("Enable automatic cleanup afterwards (Y/n)", input.BooleanValidator(true)).(bool)
+	switch automaticCleanup := input.Prompt("Enable automatic cleanup afterwards (Y/n)", input.BooleanValidator).(type) {
+	case bool:
+		conf.CleanupAfterwards = automaticCleanup
+	default:
+		conf.CleanupAfterwards = true
+	}
 
 	b.Println("Do you want to enable automatic updates?", "",
 		"If enabled and updates are available,",
 		"Cain will update itself without interruptions")
 
-	conf.AutoUpdate = input.Prompt("Enable automatic updates (Y/n)", input.BooleanValidator(true)).(bool)
+	switch autoUpdate := input.Prompt("Enable automatic updates (Y/n)", input.BooleanValidator).(type) {
+	case bool:
+		conf.AutoUpdate = autoUpdate
+	default:
+		conf.AutoUpdate = true
+	}
 
 	err = store.Save(conf)
 	if err != nil {
-		return err
+		return cli.Exit(err, 1)
 	}
 
 	b.Println("Config successfully saved",

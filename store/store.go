@@ -8,7 +8,7 @@ import (
 	"reflect"
 	"strings"
 
-	homedir "github.com/mitchellh/go-homedir"
+	"github.com/atrox/homedir"
 	yaml "gopkg.in/yaml.v2"
 )
 

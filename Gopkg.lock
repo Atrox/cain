@@ -8,32 +8,38 @@
   revision = "3dc37d159ab1baa7f7d7031778de804aad81d13d"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/equinox-io/equinox"
-  packages = [".","internal/go-update","internal/go-update/internal/binarydist","internal/go-update/internal/osext","internal/osext","proto"]
-  revision = "6f97d0d3970881d3e53dd6f547a41109eb055e54"
+  name = "github.com/atrox/homedir"
+  packages = ["."]
+  revision = "06c445c1ff71259ff8653dd17941b062b4c7f457"
+  version = "v1.0.0"
+
+[[projects]]
+  name = "github.com/atrox/input"
+  packages = ["."]
+  revision = "cf17a3100f6734c87c83e4e939e1255901c6207e"
+  version = "v1.1.0"
 
 [[projects]]
   branch = "master"
-  name = "github.com/mitchellh/go-homedir"
-  packages = ["."]
-  revision = "b8bc1bf767474819792c23f32d8286a45736f1c6"
+  name = "github.com/equinox-io/equinox"
+  packages = [".","internal/go-update","internal/go-update/internal/binarydist","internal/go-update/internal/osext","internal/osext","proto"]
+  revision = "f24972fa72facf59d05c91c848b65eac38815915"
 
 [[projects]]
   branch = "v2"
   name = "github.com/urfave/cli"
   packages = ["."]
-  revision = "61c3eb6ba1da1df17cd50f1456a9252d92bf5edd"
+  revision = "b2bf3c5abeb90da407891aecd1df2c5a1f6170c1"
 
 [[projects]]
   branch = "v2"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
-  revision = "cd8b52f8269e0feb286dfeef29f8fe4d5b397e0b"
+  revision = "eb3733d160e74a9c7e442f435eb3bea458e1d19f"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "7319160550b1f9c8a4932d37ca8982a0a7e3f04a4b9d4222a1319afca3964d1a"
+  inputs-digest = "34da4877f2e352fe5649e8d7b6379b13d9dfdfe96b414b4c191bac02b2ed44c0"
   solver-name = "gps-cdcl"
   solver-version = 1

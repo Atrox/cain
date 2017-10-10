@@ -45,14 +45,14 @@ func runAction(c *cli.Context) error {
 
 	fb, err := filebot.New(conf)
 	if err != nil {
-		return err
+		return cli.Exit(err, 1)
 	}
 	fb.RetrievePath = path
 	fb.NonStrictMatching = c.Bool("non-strict")
 
 	err = fb.Execute()
 	if err != nil {
-		return err
+		return cli.Exit(err, 1)
 	}
 
 	fmt.Println("[+] Successfully sorted all found media files.")
