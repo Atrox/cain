@@ -1,6 +1,8 @@
 package commands
 
 import (
+	"fmt"
+
 	"github.com/atrox/cain/updater"
 	"github.com/urfave/cli"
 )
@@ -12,9 +14,13 @@ var UpdateCommand = &cli.Command{
 }
 
 func updateAction(c *cli.Context) error {
-	err := updater.ForceRun()
+	appUpdater := updater.New(true)
+	updated, err := appUpdater.Run()
 	if err != nil {
 		return cli.Exit(err, 1)
+	}
+	if !updated {
+		b.Println("You are on the newest version", "", fmt.Sprintf("Version %s", updater.Version))
 	}
 	return nil
 }

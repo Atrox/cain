@@ -16,6 +16,10 @@ var (
 	appUpdater *updater.Updater
 )
 
+func init() {
+	updater.Version = version
+}
+
 func main() {
 	cmds := []*cli.Command{
 		commands.SetupCommand,
@@ -58,7 +62,11 @@ func after(c *cli.Context) error {
 		return nil
 	}
 
-	return appUpdater.Run()
+	_, err := appUpdater.Run()
+	if err != nil {
+		return cli.Exit(err, 1)
+	}
+	return nil
 }
 
 var logo = strings.TrimLeft(fmt.Sprintf(`

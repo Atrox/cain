@@ -2,6 +2,12 @@
 
 
 [[projects]]
+  name = "github.com/apex/log"
+  packages = ["."]
+  revision = "0296d6eb16bb28f8a0c55668affcf4876dc269be"
+  version = "v1.0.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/atrox/box"
   packages = ["."]
@@ -27,15 +33,99 @@
 
 [[projects]]
   branch = "master"
-  name = "github.com/equinox-io/equinox"
-  packages = [".","internal/go-update","internal/go-update/internal/binarydist","internal/go-update/internal/osext","internal/osext","proto"]
-  revision = "f24972fa72facf59d05c91c848b65eac38815915"
+  name = "github.com/c4milo/unpackit"
+  packages = ["."]
+  revision = "4ed373e9ef1c895fe04468d813cb628902d89a0a"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/dsnet/compress"
+  packages = [".","bzip2","bzip2/internal/sais","internal","internal/errors","internal/prefix"]
+  revision = "c4dbed65594871659ea7347a85e1b8dcd97b9990"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/google/go-github"
+  packages = ["github"]
+  revision = "c004bf0c02fcab9d87a7f2e2f002fd008bf0784c"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/google/go-querystring"
+  packages = ["query"]
+  revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/gosuri/uilive"
+  packages = ["."]
+  revision = "ac356e6e42cd31fcef8e6aec13ae9ed6fe87713e"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/gosuri/uiprogress"
+  packages = [".","util/strutil"]
+  revision = "d0567a9d84a1c40dd7568115ea66f4887bf57b33"
+
+[[projects]]
+  name = "github.com/klauspost/compress"
+  packages = ["flate"]
+  revision = "6c8db69c4b49dd4df1fff66996cf556176d0b9bf"
+  version = "v1.2.1"
+
+[[projects]]
+  name = "github.com/klauspost/cpuid"
+  packages = ["."]
+  revision = "ae7887de9fa5d2db4eaa8174a7eff2c1ac00f2da"
+  version = "v1.1"
+
+[[projects]]
+  name = "github.com/klauspost/crc32"
+  packages = ["."]
+  revision = "cb6bfca970f6908083f26f39a79009d608efd5cd"
+  version = "v1.1"
+
+[[projects]]
+  name = "github.com/klauspost/pgzip"
+  packages = ["."]
+  revision = "0bf5dcad4ada2814c3c00f996a982270bb81a506"
+  version = "v1.1"
+
+[[projects]]
+  name = "github.com/mattn/go-isatty"
+  packages = ["."]
+  revision = "0360b2af4f38e8d38c7fce2a9f4e702702d73a39"
+  version = "v0.0.3"
+
+[[projects]]
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  revision = "645ef00459ed84a119197bfb8d8205042c6df63d"
+  version = "v0.8.0"
+
+[[projects]]
+  name = "github.com/tj/go-update"
+  packages = [".","progress"]
+  revision = "8831a6e7cfe17e95cc0e3cffdb541518e5985927"
+  version = "v1.0.0"
+
+[[projects]]
+  name = "github.com/ulikunitz/xz"
+  packages = [".","internal/hash","internal/xlog","lzma"]
+  revision = "0c6b41e72360850ca4f98dc341fd999726ea007f"
+  version = "v0.5.4"
 
 [[projects]]
   branch = "v2"
   name = "github.com/urfave/cli"
   packages = ["."]
   revision = "b2bf3c5abeb90da407891aecd1df2c5a1f6170c1"
+
+[[projects]]
+  branch = "master"
+  name = "golang.org/x/sys"
+  packages = ["unix"]
+  revision = "ebfc5b4631820b793c9010c87fd8fef0f39eb082"
 
 [[projects]]
   branch = "v2"
@@ -46,6 +136,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9321fa9c5df11da6d3ee0d88476b21aab5460ed90082475980b17acf8bb7bab4"
+  inputs-digest = "f6b0aaa9a65f6751e591bc5f333fc05637978d820168a6e06aef29b7f3503439"
   solver-name = "gps-cdcl"
   solver-version = 1

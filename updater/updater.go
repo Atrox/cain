@@ -1,86 +1,63 @@
 package updater
 
 import (
+	"errors"
 	"fmt"
-	"log"
+	"runtime"
 	"time"
 
 	"github.com/atrox/box"
 	"github.com/atrox/cain/config"
-	"github.com/equinox-io/equinox"
+	"github.com/tj/go-update"
+	"github.com/tj/go-update/progress"
 )
 
-var b = box.New()
+var (
+	Version string
+	b       = box.New()
+)
 
 type Updater struct {
 	NextCheck time.Time `yaml:"nextCheck"`
 
+	project         *update.Project
 	automaticUpdate bool
-	updateAvailable chan *equinox.Response
+	updateAvailable chan *update.Release
 }
 
 func New(autoUpdate bool) *Updater {
 	updater := new(Updater)
 	config.Storage.Get(updater)
 
+	updater.project = &update.Project{
+		Command: "cain",
+		Owner:   "Atrox",
+		Repo:    "cain",
+		Version: Version,
+	}
 	updater.automaticUpdate = autoUpdate
-	updater.updateAvailable = make(chan *equinox.Response)
+	updater.updateAvailable = make(chan *update.Release)
 
 	go updater.check()
 	return updater
 }
 
-func (u *Updater) Run() error {
-	update := <-u.updateAvailable
-	if update == nil {
-		return nil
+func (u *Updater) Run() (bool, error) {
+	release := <-u.updateAvailable
+	if release == nil {
+		return false, nil
 	}
 
 	if !u.automaticUpdate {
 		b.Println(
-			fmt.Sprintf("%s (%s)", update.ReleaseTitle, update.ReleaseDate.Format("02.01.2006")), "",
+			fmt.Sprintf("%s (%s)", release.Version, release.PublishedAt.Format("02.01.2006")), "",
 			"New Version of Cain is available!",
-			"Update automatically with 'cain update'")
+			"Update instantly with 'cain update'")
 
-		return nil
+		return false, nil
 	}
 
-	b.Println("Updating...", "", "Please don't close me while I'm working")
-
-	// fetch the update and apply it
-	err := update.Apply()
-	if err != nil {
-		return err
-	}
-
-	b.Println(fmt.Sprintf("%s (%s)", update.ReleaseTitle, update.ReleaseDate.Format("02.01.2006")), "",
-		"Successfully updated!")
-	return nil
-}
-
-func ForceRun() error {
-	var opts equinox.Options
-	err := opts.SetPublicKeyPEM(publicKey)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	update, err := equinox.Check(appID, opts)
-	if err != nil {
-		return err
-	}
-
-	b.Println("Updating...", "", "Please don't close me while I'm working")
-
-	// fetch the update and apply it
-	err = update.Apply()
-	if err != nil {
-		return err
-	}
-
-	b.Println(fmt.Sprintf("%s (%s)", update.ReleaseTitle, update.ReleaseDate.Format("02.01.2006")), "",
-		"Successfully updated!")
-	return nil
+	return true, u.update(release)
 }
 
 func (u *Updater) check() {
@@ -91,19 +68,57 @@ func (u *Updater) check() {
 
 	u.setNext()
 
-	var opts equinox.Options
-	err := opts.SetPublicKeyPEM(publicKey)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	resp, err := equinox.Check(appID, opts)
+	// fetch latest release
+	release, err := u.fetchRelease()
 	if err != nil {
 		u.updateAvailable <- nil
 		return
 	}
 
-	u.updateAvailable <- &resp
+	u.updateAvailable <- release
+}
+
+func (u *Updater) fetchRelease() (*update.Release, error) {
+	// fetch the new releases
+	releases, err := u.project.LatestReleases()
+	if err != nil {
+		return nil, err
+	}
+
+	// no updates
+	if len(releases) == 0 {
+		return nil, nil
+	}
+
+	// latest release
+	latest := releases[0]
+	return latest, nil
+}
+
+func (u *Updater) update(release *update.Release) error {
+	b.Println("Updating...", "", "Please don't close me while I'm working")
+
+	// find the tarball for this system
+	asset := release.FindTarball(runtime.GOOS, runtime.GOARCH)
+	if asset == nil {
+		b.Println("No binary for your system is published", "", "Go to https://github.com/Atrox/cain/releases")
+		return errors.New("No binary for your system is published on GitHub")
+	}
+
+	// download tarball to a tmp dir
+	tarball, err := asset.DownloadProxy(progress.Reader)
+	if err != nil {
+		return err
+	}
+
+	// install it
+	if err := u.project.Install(tarball); err != nil {
+		return err
+	}
+
+	b.Println(fmt.Sprintf("%s (%s)", release.Version, release.PublishedAt.Format("02.01.2006")), "",
+		"Successfully updated!")
+	return nil
 }
 
 func (u *Updater) shouldCheck() bool {

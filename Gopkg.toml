@@ -34,9 +34,9 @@
   version = "1.0.1"
 
 [[constraint]]
-  branch = "master"
-  name = "github.com/equinox-io/equinox"
-
-[[constraint]]
   branch = "v2"
   name = "github.com/urfave/cli"
+
+[[constraint]]
+  name = "github.com/tj/go-update"
+  version = "1.0.0"

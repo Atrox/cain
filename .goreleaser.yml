@@ -1,0 +1,32 @@
+project_name: cain
+
+release:
+  github:
+    owner: atrox
+    name: cain
+
+builds:
+- goos:
+    - linux
+    - darwin
+    - windows
+  goarch:
+    - amd64
+    - 386
+    - arm
+    - arm64
+  binary: cain
+
+archive:
+  files:
+    - README.md
+    - LICENSE
+  replacements:
+    386: i386
+    amd64: x86_64
+  format_overrides:
+    - goos: windows
+      format: zip
+
+checksum:
+  name_template: '{{ .ProjectName }}_{{ .Version }}_checksums.txt'
