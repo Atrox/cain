@@ -1,5 +1,5 @@
 # CAIN - Simple Media Management
-[<img src="https://files.atrox.me/selif/scroll.png" align="right" width="100">](https://github.com/Atrox/cain)
+[<img src="https://files.atrox.me/selif/scroll.png" align="right" width="100">][repo]
 
 Cain *automatically* organises your movies and TV-shows according to your configuration.
 Your favourite torrent/download client should call Cain after the download has finished and Cain will do the rest.
@@ -18,13 +18,11 @@ Your favourite torrent/download client should call Cain after the download has f
 [FileBot][filebot] needs to be installed and the `filebot` executable has to be globally available.
 
 ### Install
-Installation packages are available for all major operating systems:
-- [Windows 64-bit][dl-win-64] ([32-bit][dl-win-32])
-- [MacOS][dl-mac]
-    - Brew: `brew install eqnxio/atrox/cain`
-- [Linux][dl-linux]
+[Latest Release][latest-release] is available for all major operating systems as a prebuilt binary.
 
-[View all prebuilt binaries][dl-page]
+1. Download and extract the [archive][latest-release]
+2. Put the binary (`cain`) somewhere save and add the location to your `PATH`
+3. Run `cain setup`
 
 ### Setup
 Before you can use Cain you need to configure some basic things first. Cain provides some sensitive defaults to get started with.
@@ -38,9 +36,10 @@ Now you can configure your [Downloader][download-client] and/or [Torrent][torren
 - **defaultRetrievePath**: Where to get the unsorted media from
     - If not specified, parameter `--path` is required.
 - **autoUpdate**: Enable/Disable automatic updates.
-- **language**: (2-letter language code)[http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes] (default: en)
+- **language**: [2-letter language code][language-iso-codes] (default: en)
 - **nonStrictMatching**: Enable to non strictly match for movies/tv-shows. Be aware that this could result in wrong matches.
 - **cleanupAfterwards**: Cain will automatically clean the remaining unused/unneeded files after moving the matched files.
+- **hideBanner**: If `true` Cain will no longer show the ascii banner before every command
 
 ### Naming Schemes
 Please see the [FileBot Documentation][filebot-naming] for more informations on this subject.
@@ -54,11 +53,11 @@ Please see the [FileBot Documentation][filebot-naming] for more informations on 
 Cain can also automatically notify specific apps for changes.
 
 - **kodi**: `host[:port]` Tell the given Kodi/XBMC instance to rescan it's library
-- **plex**: `host[:token]` Tell the given Plex instance to rescan it's library. Plex Home instances require an [authentication token](https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token).
+- **plex**: `host[:token]` Tell the given Plex instance to rescan it's library. Plex Home instances require an [authentication token][plex-token].
 - **emby**: `host:apikey` Tell the given Emby instance to rescan it's library.
 - **pushover**: `userkey` Send update notifications to your devices via Pushover.
 - **pushBullet**: `apikey` Send full reports to all your PushBullet devices
-- **gmail**: `username:password` Use the following gmail account to send and receive full reports. You must use an [App Password](https://support.google.com/accounts/answer/185833?hl=en) for security reasons.
+- **gmail**: `username:password` Use the following gmail account to send and receive full reports. You must use an [App Password][gmail-app-password] for security reasons.
 - **mail**: `host:port:from[:username:password]` Send email via custom mail server
 
 ## Command line reference
@@ -77,17 +76,17 @@ Everyone is encouraged to help improve this project. Here are a few ways you can
 - Write, clarify, or fix documentation
 - Suggest or add new features
 
-[dl-win-64]: https://bin.equinox.io/c/Dyvh1T2kPn/cain-stable-windows-amd64.msi
-[dl-win-32]: https://bin.equinox.io/c/Dyvh1T2kPn/cain-stable-windows-386.msi
-[dl-mac]: https://bin.equinox.io/c/Dyvh1T2kPn/cain-stable-darwin-amd64.pkg
-[dl-linux]: https://dl.equinox.io/atrox/cain/stable
-[dl-page]: https://dl.equinox.io/atrox/cain/stable
-
 [filebot]: http://www.filebot.net/
 [filebot-naming]: http://www.filebot.net/naming.html
 
 [download-client]: https://github.com/Atrox/cain/wiki/Download-Clients
 [torrent-client]: https://github.com/Atrox/cain/wiki/Torrent-Clients
 
+[repo]: https://github.com/atrox/cain
 [issues]: https://github.com/atrox/cain/issues
 [pulls]: https://github.com/atrox/cain/pulls
+[latest-release]: https://github.com/atrox/cain/releases/latest
+
+[language-iso-codes]: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+[plex-token]: https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token
+[gmail-app-password]: https://support.google.com/accounts/answer/185833?hl=en
