@@ -42,14 +42,16 @@ func main() {
 }
 
 func before(c *cli.Context) error {
-	fmt.Println(logo)
+	// get configuration
+	conf := new(config.Config)
+	config.Storage.Get(conf)
+
+	if !conf.HideBanner {
+		fmt.Println(logo)
+	}
 
 	// check only for updates if binary is versioned
 	if version != "master" {
-		// get configuration
-		conf := new(config.Config)
-		config.Storage.Get(conf)
-
 		// check for updates in background
 		appUpdater = updater.New(conf.AutoUpdate)
 	}

@@ -10,6 +10,7 @@ type Config struct {
 	Language            string `yaml:"language"`
 	NonStrictMatching   bool   `yaml:"nonStrictMatching"`
 	CleanupAfterwards   bool   `yaml:"cleanupAfterwards"`
+	HideBanner          bool   `yaml:"hideBanner"`
 
 	Destinations  Destinations  `yaml:"destinations"`
 	NamingSchemes NamingSchemes `yaml:"namingSchemes"`
